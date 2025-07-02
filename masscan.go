@@ -318,10 +318,10 @@ func SetBanners() func(*Scanner) {
 }
 
 func SetParamTtl(ttl time.Duration) func(*Scanner) {
-	milliseconds := ttl.Round(time.Nanosecond).Nanoseconds() / 1000000
+	//milliseconds := ttl.Round(time.Nanosecond).Nanoseconds() / 1000000
 	return func(s *Scanner) {
 		s.args = append(s.args, fmt.Sprintf("--ttl=%s", ttl))
-		s.args = append(s.args, fmt.Sprintf("%dms", int(milliseconds)))
+		//s.args = append(s.args, fmt.Sprintf("%dms", int(milliseconds)))
 	}
 }
 
@@ -352,10 +352,12 @@ func WithContext(ctx context.Context) Option {
 
 func ParseResult(content []byte) (sr ScannerResult) {
 	result := strings.Split(string(content), " ")
-	fmt.Println("==============result", result)
-	sr.IP = result[5]
-	p := strings.Split(result[3], "/")
-	sr.Port = p[0]
+	if len(result) >= 5 {
+		sr.IP = result[5]
+		p := strings.Split(result[3], "/")
+		sr.Port = p[0]
+	}
+
 	return sr
 }
 
