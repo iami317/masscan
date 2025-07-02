@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/iami317/masscan/errors"
 	"github.com/iami317/masscan/tools"
@@ -280,11 +281,17 @@ func SetParamWait(delay int) func(*Scanner) {
 	}
 }
 
-// SetParamPorts sets the ports which the scanner should scan on each host.
-// eg: -p 80,8000-8100
+// SetParamInterface
 func SetParamInterface(eth string) func(*Scanner) {
 	return func(s *Scanner) {
 		s.args = append(s.args, fmt.Sprintf("--interface=%s", eth))
+	}
+}
+
+// SetParamPcap eg: --pcap
+func SetParamPcap() func(*Scanner) {
+	return func(s *Scanner) {
+		s.args = append(s.args, "--pcap")
 	}
 }
 
@@ -307,6 +314,32 @@ func SetSeed(x int) func(*Scanner) {
 func SetBanners() func(*Scanner) {
 	return func(s *Scanner) {
 		s.args = append(s.args, "--banners")
+	}
+}
+
+func SetParamTtl(ttl time.Duration) func(*Scanner) {
+	milliseconds := ttl.Round(time.Nanosecond).Nanoseconds() / 1000000
+	return func(s *Scanner) {
+		s.args = append(s.args, fmt.Sprintf("--ttl=%s", ttl))
+		s.args = append(s.args, fmt.Sprintf("%dms", int(milliseconds)))
+	}
+}
+
+func SetParamRetries(retries int) func(*Scanner) {
+	return func(s *Scanner) {
+		s.args = append(s.args, fmt.Sprintf("--retries=%v", retries))
+	}
+}
+
+func SetICMP() func(*Scanner) {
+	return func(s *Scanner) {
+		s.args = append(s.args, "--ping")
+	}
+}
+
+func SetAdapter(adapter string) func(*Scanner) {
+	return func(scanner *Scanner) {
+		scanner.args = append(scanner.args, fmt.Sprintf("--adapter=%s", adapter))
 	}
 }
 
