@@ -10,8 +10,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/zan8in/masscan/errors"
-	"github.com/zan8in/masscan/tools"
+	"github.com/iami317/masscan/errors"
+	"github.com/iami317/masscan/tools"
 )
 
 type (
@@ -319,6 +319,7 @@ func WithContext(ctx context.Context) Option {
 
 func ParseResult(content []byte) (sr ScannerResult) {
 	result := strings.Split(string(content), " ")
+	fmt.Println("==============result", result)
 	sr.IP = result[5]
 	p := strings.Split(result[3], "/")
 	sr.Port = p[0]

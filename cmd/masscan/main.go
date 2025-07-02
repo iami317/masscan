@@ -1,30 +1,30 @@
 package main
 
 import (
-	"github.com/zan8in/gologger"
-	"github.com/zan8in/masscan/pkg/runner"
+	"github.com/iami317/logx"
+	"github.com/iami317/masscan/pkg/runner"
 )
 
 func main() {
 	opts, err := runner.NewOptions()
 	if err != nil {
-		gologger.Error().Msg(err.Error())
+		logx.Error(err.Error())
 		return
 	}
 
 	runner, err := runner.NewRunner(opts)
 	if err != nil {
-		gologger.Error().Msg(err.Error())
+		logx.Error(err.Error())
 		return
 	}
 
 	ts, err := runner.GetTargets()
 	if err != nil {
-		gologger.Error().Msg(err.Error())
+		logx.Error(err.Error())
 		return
 	}
 
 	for t := range ts {
-		gologger.Debug().Msg(t)
+		logx.Debug(t)
 	}
 }

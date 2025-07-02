@@ -2,10 +2,9 @@ package runner
 
 import (
 	"fmt"
+	"github.com/iami317/logx"
 
 	"github.com/zan8in/goflags"
-	"github.com/zan8in/gologger"
-	"github.com/zan8in/gologger/levels"
 )
 
 type Options struct {
@@ -68,7 +67,7 @@ func (opts *Options) validateOptions() error {
 	}
 
 	if opts.Debug {
-		gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+		logx.SetLevel("debug")
 	}
 
 	return nil

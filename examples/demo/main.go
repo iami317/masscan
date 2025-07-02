@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/zan8in/masscan"
+	"github.com/iami317/masscan"
 	"log"
 )
 
